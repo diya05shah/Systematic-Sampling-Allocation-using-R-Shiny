@@ -1,125 +1,43 @@
-# Interactive Stratified Sampling Designer – R Shiny Application
+# Systematic Sampling Design Dashboard
 
-## Overview
-This repository contains an interactive R Shiny application developed to design and
-analyze stratified random sampling schemes. The application determines the required
-total sample size and allocates samples across strata under different allocation
-strategies based on user-defined precision requirements.
+## Project Overview
+This repository hosts an R Shiny application developed for the **"Reference - Sampling 2"** assignment. The tool is designed to automate the decision-making process for a **Systematic Random Sampling** survey.
 
-The project emphasizes practical implementation of stratified sampling theory by
-allowing users to explore how margin of error, confidence level, cost, and time
-constraints influence sample size and allocation decisions.
+The dashboard serves as a planning tool for researchers to determine the optimal scope of a survey required to estimate a population mean, balancing the need for statistical accuracy with real-world limitations on budget and time.
 
----
+## Objective
+The primary goal of this project is to simulate the design of an experiment where:
+1.  A target precision (acceptable bias) is set.
+2.  The required sample size is derived from that target.
+3.  The logistical plan (cost, duration, and sampling intervals) is automatically generated.
 
-## Objectives
-- To determine the minimum total sample size required for a desired level of precision
-- To allocate samples across strata using multiple stratified allocation methods
-- To compare classical and optimal allocation strategies interactively
-- To study the impact of cost and time constraints on sampling design
-- To visualize stratum-wise allocation differences across methods
+## Theoretical Framework
 
----
+### 1. Determining Sample Size
+The core logic of the application rests on the relationship between **variability**, **precision**, and **sample size**:
+* **Variability:** If the population is highly diverse (high standard deviation), a larger sample is needed to capture an accurate mean.
+* **Precision (Bias):** The "Bias" input represents the acceptable margin of error. There is an inverse relationship here: to achieve a smaller margin of error (higher precision), the sample size must increase significantly.
+* **Confidence:** The design assumes a standard statistical confidence level (e.g., 95%) to ensure the results are reliable.
 
-## Stratified Sampling Concept
-Stratified sampling is a probability sampling technique in which the population is
-divided into mutually exclusive and collectively exhaustive groups known as strata.
-A separate sample is selected from each stratum, and results are combined to obtain
-overall population estimates.
+### 2. Systematic Sampling Logic
+Unlike simple random sampling, this application implements a **Systematic approach**:
+* **The Frame:** The process begins with an ordered list of the total population.
+* **The Interval:** Instead of selecting random individuals purely by chance, the system calculates a fixed "step size" or **interval**. This interval is determined by dividing the total population by the required sample size.
+* **Selection Process:** The algorithm selects a random starting point within the first interval, and then selects every subsequent item based on the fixed step size. This ensures the sample is spread evenly across the entire population frame.
 
-This method improves efficiency and precision when strata are internally homogeneous
-and differ from one another with respect to the characteristic of interest.
+### 3. Resource Constraints
+A key feature of this assignment is the integration of **Cost and Time** into the sampling design:
+* **Linear Scaling:** The application assumes that cost and time scale linearly with sample size.
+* **Feasibility Check:** By inputting the "Cost per Unit" and "Time per Unit," the user can immediately see if a desired level of precision is financially feasible or if it fits within the project timeline.
 
----
+## Visualizing the Trade-off
+The dashboard includes a **Sensitivity Analysis Plot**. This graph visualizes the "Law of Diminishing Returns" in sampling:
+* The curve shows how increasing the sample size reduces the sampling bias.
+* It demonstrates that after a certain point, adding more samples costs significantly more money/time but yields only a tiny improvement in accuracy. This helps the user choose the most efficient design.
 
-## Precision and Sampling Error
-In this project, sampling error refers to the allowable deviation between the sample
-estimate and the true population parameter.
+## How to Use
+1.  **Input Parameters:** Enter the known population details, estimated variability, and your constraints (budget/time).
+2.  **Analyze Outputs:** Review the calculated sample size and the specific "Step Interval" needed for the systematic selection.
+3.  **Check Feasibility:** Use the calculated Total Cost and Total Time to verify if the survey plan is realistic.
 
-The user specifies:
-- An acceptable margin of error
-- A confidence level
-
-Based on these inputs, the application determines the smallest total sample size that
-achieves the required precision while maintaining statistical reliability.
-
----
-
-## Allocation Methods Implemented
-
-### 1. Proportional Allocation
-Samples are distributed across strata in proportion to their population sizes.
-Larger strata receive more samples, while smaller strata receive fewer.
-
-This method is simple to apply and is effective when variability across strata is
-approximately equal.
-
----
-
-### 2. Neyman Allocation
-This method allocates samples based on both the size and variability of each stratum.
-Strata exhibiting higher variability are assigned more observations.
-
-Neyman allocation improves overall precision compared to proportional allocation,
-especially when stratum variances differ substantially.
-
----
-
-### 3. Optimum Allocation (Cost-Based)
-In many surveys, the cost of collecting data varies across strata. This allocation
-method accounts for such differences by allocating fewer samples to expensive strata
-and more samples to cost-efficient strata.
-
-The objective is to achieve the desired precision at the lowest possible total cost.
-
----
-
-### 4. Optimum Allocation (Time-Based)
-This method considers the time required to collect observations from each stratum.
-Strata that are quicker to survey and exhibit higher variability receive more samples.
-
-This approach is particularly useful when survey timelines are constrained.
-
----
-
-## Finite Population Consideration
-Since sampling is conducted without replacement from a finite population, the design
-accounts for finite population effects to ensure realistic assessment of sampling
-uncertainty and avoid overestimation of variability.
-
----
-
-## Application Features
-- Interactive control of margin of error and confidence level
-- Automatic determination of minimum total sample size
-- Comparison of four stratified allocation strategies
-- Stratum-wise allocation visualization using bar plots
-- Detailed allocation tables for each method
-- Validation of achieved precision for each allocation
-
----
-
-## Implementation Details
-- The application is built using the R Shiny framework
-- Strata characteristics are defined within the server logic (demo data)
-- Sample sizes are adjusted to ensure consistency across strata
-- Allocation results are recalculated dynamically based on user input
-
----
-
-## Files Included
-- `app.R` – R Shiny application implementing stratified sampling design and allocation
-
----
-
-## Author
-**Diya Shah**  
-BSc Data Science & Statistics  
-CHRIST (Deemed to be University)
-
----
-
-## Academic Note
-This project was developed as part of academic coursework in sampling theory and
-statistical survey design. It demonstrates the translation of theoretical stratified
-sampling concepts into an interactive decision-support application using R.
+## Author Diya Shah
