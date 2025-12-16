@@ -1,7 +1,7 @@
 # Systematic Sampling Design Dashboard
 
 ## Project Overview
-This repository hosts an R Shiny application developed for the **"Reference - Sampling 2"** assignment. The tool is designed to automate the decision-making process for a **Systematic Random Sampling** survey.
+This repository hosts an R Shiny application. The tool is designed to automate the decision-making process for a **Systematic Random Sampling** survey.
 
 The dashboard serves as a planning tool for researchers to determine the optimal scope of a survey required to estimate a population mean, balancing the need for statistical accuracy with real-world limitations on budget and time.
 
